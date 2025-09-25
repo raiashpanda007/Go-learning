@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 import "sort"
+
 func main() {
 	fmt.Println("This day is about learning array and slices")
 	var fruitList [4]string
@@ -26,7 +27,16 @@ func main() {
 	highScores[1] = 945
 	highScores[2] = 465
 	highScores[3] = 867
-	//highScores[4] = 777 this is not possible  but  can add by appending into it 
+	//highScores[4] = 777 this is not possible  but  can add by appending into it
 	highScores = append(highScores, 555, 666, 321)
 	sort.Ints(highScores)
+
+	fmt.Println("--------------------------------------------------------Delete index------------------------------------------------------------")
+
+	var courses = []string{"reactjs", "js", "ts", "python"};
+
+	index := 1;
+	courses = append(courses[:index],courses[index+1:]...)
+	fmt.Println("Print courses" , courses)
+
 }
