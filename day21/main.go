@@ -2,8 +2,18 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
+func emailSender(emailChan chan string, done chan bool) {
+	defer func() { done <- true }()
+
+	for email := range emailChan {
+		fmt.Println("Sending email to ...", email)
+		time.Sleep(time.Second)
+	}
+
+}
 func processFunction(numChan chan int) {
 
 	for num := range numChan {
@@ -19,8 +29,12 @@ func task(done chan bool) {
 func main() {
 
 	done := make(chan bool)
-	go task(done)
-
+	emailChan := make(chan string, 100)
+	go emailSender(emailChan, done)
+	for i := 0; i < 10; i++ {
+		emailChan <- fmt.Sprintf("%d@gmail.com", i)
+	}
+	fmt.Println("Completed Sending")
 	<-done //to block
 
 	//	messageChan := make(chan string)
